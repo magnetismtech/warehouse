@@ -17,5 +17,10 @@
                 "Magnetism\\Warehouse\\WarehouseServiceProvider"
             ]
         }
+    },
+    "autoload": {
+        "psr-4": {
+            "Magnetism\\Warehouse\\": "src/"
+        }
     }
 }

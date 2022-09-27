@@ -1,0 +1,21 @@
+{
+    "name": "magnetism/warehouse",
+    "description": "A simple warehouse with contact person.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Magnetism Tech Ltd.",
+            "email": "resources@magnetismtech.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}, 
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Magnetism\\Warehouse\\WarehouseServiceProvider"
+            ]
+        }
+    }
+}

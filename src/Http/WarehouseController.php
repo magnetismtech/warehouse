@@ -3,10 +3,8 @@
 namespace Magnetism\Warehouse\Http;
 
 use Illuminate\Http\Request;
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Magnetism\Warehouse\Models\Warehouse;
-use Illuminate\Http\JsonResponse;
 
 class WarehouseController extends Controller
 {
@@ -19,15 +17,20 @@ class WarehouseController extends Controller
     public function index()
     {
         try {
-            $warehouses = Warehouse::latest()->get();
+            $data = [ 'warehouses' => Warehouse::latest()->get() ];
+
             return response()->json([
-                'value' => $warehouses,
-                'message' => 'Warehouses retrieved Successfully.'
+                'success' => true,
+                'message' => 'Warehouses retrieved Successfully.',
+                'data' =>  $data
             ], 200);
         }
         catch (\Exception $e)
         {
-            return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
         }
     }
 
@@ -41,28 +44,40 @@ class WarehouseController extends Controller
     {
         try{
             $warehouse = Warehouse::create($request->all());
+            $data = [ 'warehouse' => $warehouse ];
+
             return response()->json([
-                'value' => $warehouse,
-                'message' => 'Warehouse added Successfully.'
-            ], 201);
+                'success' => true,
+                'message' => 'Warehouse updated Successfully.',
+                'data' =>  $data
+            ], 200);
+
         }
         catch (\Exception $e)
         {
-            return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
         }
     }
 
     public function show($id)
     {
         try {
-            $warehouse = Warehouse::find($id);
+            $data = [ 'warehouse' => Warehouse::find($id) ];
+
             return response()->json([
-                'value' => $warehouse,
-                'message' => 'Warehouse retrieved successfully.'
+                'success' => true,
+                'message' => 'Warehouse retrieved Successfully.',
+                'data' =>  $data
             ], 200);
-        } catch (\Exception $e)
-        {
-            return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
+                        
+        } catch (\Exception $e){
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
         }
     }
 
@@ -79,14 +94,21 @@ class WarehouseController extends Controller
         try{
             $warehouse = Warehouse::find($id);
             $warehouse->update($request->all());
+            $data = [ 'warehouses' => $warehouse ];            
+
             return response()->json([
-                'value' => $warehouse,
-                'message' => 'Warehouse updated Successfully.'
-            ], 201);
+                'success' => true,
+                'message' => 'Warehouses updated Successfully.',
+                'data' =>  $data
+            ], 200);
+
         }
         catch (\Exception $e)
         {
-            return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
         }
     }
 
@@ -99,15 +121,18 @@ class WarehouseController extends Controller
     public function destroy($id)
     {
         try {
-            $warehouse = Warehouse::find($id)->delete();
+            Warehouse::find($id)->delete();
+
             return response()->json([
-                'value' => '',
-                'message' => 'Warehouse deleted Successfully.'
-            ], 204);
-        }
-        catch (\Exception $e)
-        {
-            return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
+                'success' => true,
+                'message' => 'Warehouses deleted Successfully.',
+                'data' =>  null
+            ], 200);
+        }catch (\Exception $e){
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
         }
     }
 }

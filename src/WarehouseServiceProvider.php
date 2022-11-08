@@ -33,6 +33,5 @@ class WarehouseServiceProvider extends ServiceProvider
                 ], 'migrations');
             }
         }
-
     }
 }
